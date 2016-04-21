@@ -37,6 +37,8 @@ int getNote(int* data)
 	//Do FFT
 	int out = fix_fftr(data,M,0);
 
+	//TODO: Determine if we need to do a "power" calculation (something like data = abs(data)^2)
+
 	int note = -1;
 	int i;
 	int k = 0;
