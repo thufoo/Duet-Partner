@@ -67,11 +67,12 @@ int getNote(int16_t data[])
 
 		//find actual note!
 		for(i=0; i < num_notes; i++){
-			if(notes[i] < freq_found){
+			if(notes[i] > freq_found){
 				break;
 			}
 		}
 		//check which note we're closer to!
+		//TODO: Check if this is actually accurate after fixing >/< issue.
 		if(i == 0)//corner case
 		{
 			note = 0;

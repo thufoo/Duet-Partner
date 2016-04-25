@@ -102,7 +102,7 @@ int
 main(int argc, char* argv[])
 {
 
-	int16_t note = -1;
+	volatile int16_t note = -1;
 
 	ADC_init();	// Initialize the ADC
 
