@@ -19,9 +19,10 @@ int SAMPLE_RATE = 20000;
 int FFT_LENGTH = 1024;
 int M = 10;
 //TODO: Determine if this is the correct range--we may need to reverse time or look at the second half of our array for the math to work!
-int ARRAY_START_POINT = 24;//TODO:define where to being checking freqs (should be close, check math)
-int ARRAY_STOP_POINT = 60;//TODO:define where to stop checking freq (should be close, check math--freq_found should be around a note in desired range!)
-int BIN_SIZE = 20;//SAMPLE_RATE/FFT_LENGTH;
+int OFFSET = 512;
+int ARRAY_START_POINT = 542;//30 + OFFSET;//TODO:define where to being checking freqs (should be close, check math)
+int ARRAY_STOP_POINT = 572;//60 + OFFSET;//TODO:define where to stop checking freq (should be close, check math--freq_found should be around a note in desired range!)
+int BIN_SIZE = 17;//twiddled after testing... was: 20;//SAMPLE_RATE/FFT_LENGTH;
 int MIN_AMPLITUDE = 5;//TODO: Define according to input data/test
 
 
@@ -32,24 +33,26 @@ int notes[13] = {523, 554, 587, 622, 659, 698, 740,
 int num_notes = 13;
 
 
-int getNote(int* data)
+int getNote(int16_t data[])
 {
 	//Do FFT
-	int out = fix_fftr(data,M,0);
+	//int out = fix_fftr(data,M,0);
 
 	//TODO: Determine if we need to do a "power" calculation (something like data = abs(data)^2)
 
 	int note = -1;
 	int i;
-	int k = 0;
+	int k = ARRAY_START_POINT-1;
 	int max = data[k];
 	//pick start and stop point so we only look at the bins we're interested in (C5 to C6 on piano)
 	for(i=ARRAY_START_POINT; i < ARRAY_STOP_POINT; i++){
-		if(data[i] > max){
-			max = data[i];
+		if(abs(data[i]) > max){
+			max = abs(data[i]);//*data[i];
 			k = i;//update max index
 		}
 	}
+
+	k = k - OFFSET;//remove offset for positive frequencies
 
 	if(max > MIN_AMPLITUDE){
 		int freq_found = k * BIN_SIZE;
