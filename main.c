@@ -32,7 +32,11 @@ int16_t dataArray2[1024];
 int16_t arrayPosition = 0;//initialize to zero
 int16_t arrayComplete = 0;//initialize to zero
 
-
+int16_t index = 0;
+				 //E,  A, E,  A, E  A,  E...
+int16_t primo[] = {4, 10, 4, 10, 4, 10, 4};
+				   //A,  C,  E, C,  A,  C,  E...
+int16_t secondo[] = {10, 13, 4, 13, 10, 13, 4};
 
 // Initialize the ADC peripheral
 void ADC_init() {
@@ -96,6 +100,22 @@ void SysTick_Handler(void)
 	ADC1->CR2 |= ADC_CR2_SWSTART;
 }
 
+void outputNote(int16_t tone)
+{
+	//TODO: put audio output here!
+}
+
+void processNote(int16_t note)
+{
+	if(note == primo(index)){
+		outputNote(secondo(index));
+		index++;
+	}
+	else{
+		outputNote(-1);//for no tone
+	}
+}
+
 
 
 int
@@ -124,6 +144,7 @@ main(int argc, char* argv[])
 				int16_t out = fix_fftr(dataArray1,10,0);
 				note = getNote(dataArray1);
 			}
+			processNote(note);
 
 		}
 	}
