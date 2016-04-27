@@ -22,7 +22,7 @@ int M = 10;
 int OFFSET = 512;
 int ARRAY_START_POINT = 542;//30 + OFFSET;//TODO:define where to being checking freqs (should be close, check math)
 int ARRAY_STOP_POINT = 572;//60 + OFFSET;//TODO:define where to stop checking freq (should be close, check math--freq_found should be around a note in desired range!)
-int BIN_SIZE = 17;//twiddled after testing... was: 20;//SAMPLE_RATE/FFT_LENGTH;
+double BIN_SIZE = 16.3;//twiddled after testing... was: 20;//SAMPLE_RATE/FFT_LENGTH;
 int MIN_AMPLITUDE = 5;//TODO: Define according to input data/test
 
 
